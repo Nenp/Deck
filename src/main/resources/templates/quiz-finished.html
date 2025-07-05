@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz zakończony</title>
+</head>
+<body>
+<h2>Ukończyłeś quiz.</h2>
+
+<p>Możesz zacz lub wrócić do strony głównej.</p>
+
+<a th:href="@{/quiz}">
+    <button type="button">Zagraj ponownie</button>
+</a>
+
+<a th:href="@{/}">
+    <button type="button">Strona główna</button>
+</a>
+
+</body>
+</html>

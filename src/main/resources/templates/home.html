@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Deck – Fiszki</title>
+</head>
+<body>
+<h1>Witaj w aplikacji Deck!</h1>
+
+<div th:if="${#authentication != null}">
+    <p>Zalogowany jako: <span th:text="${#authentication.name}"></span></p>
+    <a th:href="@{/flashcards/view}">Moje fiszki</a>
+    <a th:href="@{/learn}">Tryb nauki</a>
+</div>
+
+<div th:if="${#authentication == null}">
+    <p>Aby korzystać z aplikacji, zaloguj się lub zarejestruj.</p>
+    <a th:href="@{/login}">Zaloguj się</a> |
+    <a th:href="@{/register}">Zarejestruj się</a>
+</div>
+
+</body>
+</html>

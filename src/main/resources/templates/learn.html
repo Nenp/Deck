@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Learn Flashcards</title>
+</head>
+<body>
+<h2>Choose categories to learn</h2>
+<form th:action="@{/learn}" th:object="${learnRequest}" method="post">
+    <ul>
+        <li th:each="cat : ${categories}">
+            <label>
+                <input type="checkbox" th:value="${cat}" th:field="*{categories}"/>
+                <span th:text="${cat}"></span>
+            </label>
+        </li>
+    </ul>
+    <label>
+        <input type="checkbox" th:field="*{includePublic}"/> Include public flashcards
+    </label>
+    <br/>
+    <p th:if="${noResults}">
+        Nie znaleziono fiszek dla wybranych ustawień.
+    </p>
+    <button type="submit">Start learning</button>
+</form>
+</body>
+</html>

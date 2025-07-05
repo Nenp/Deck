@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Wynik nauki</title>
+</head>
+<body>
+<h1>Fiszki do nauki</h1>
+
+
+<!--  list -->
+<ul>
+    <li th:each="card : ${flashcards}">
+        <b th:text="${card.front}"></b> – <span th:text="${card.back}"></span>
+    </li>
+</ul>
+</body>
+</html>

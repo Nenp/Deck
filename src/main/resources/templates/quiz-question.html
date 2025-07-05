@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz</title>
+</head>
+<body>
+
+<h2>Kategoria: <span th:text="${card.category}"></span></h2>
+<p><strong>Pytanie:</strong> <span th:text="${card.front}"></span></p>
+
+<div>
+    <details open>
+        <summary>Pokaż odpowiedź</summary>
+        <p th:text="${card.back}"></p>
+    </details>
+</div>
+
+<form th:action="@{/quiz/answer}" method="post">
+    <p>Correct?</p>
+    <input type="hidden" name="isCorrect" value="true"/>
+    <button type="submit">✅ Tak</button>
+</form>
+
+<form th:action="@{/quiz/answer}" method="post">
+    <input type="hidden" name="isCorrect" value="false"/>
+    <button type="submit">❌ Nie</button>
+</form>
+
+</body>
+</html>

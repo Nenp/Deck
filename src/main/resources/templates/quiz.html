@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rozpocznij quiz</title>
+</head>
+<body>
+<h2>Wybierz kategorie do quizu</h2>
+
+<form th:action="@{/quiz/start}" th:object="${quizRequest}" method="post">
+    <ul>
+        <li th:each="cat : ${categories}">
+            <label>
+                <input type="checkbox" th:value="${cat}" th:field="*{categories}" />
+                <span th:text="${cat}"></span>
+            </label>
+        </li>
+    </ul>
+
+    <label>
+        <input type="checkbox" th:field="*{includePublic}" />
+        Uwzględnij fiszki publiczne
+    </label>
+
+    <br/><br/>
+    <button type="submit">Start Quiz</button>
+</form>
+</body>
+</html>
