@@ -1,17 +1,67 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Wynik nauki</title>
+    <style>
+        .flashcard-button {
+            width: 100%;
+            text-align: left;
+            padding: 1em;
+            margin: 10px 0;
+            font-size: 1.1em;
+            background-color: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .flashcard-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .answer {
+            display: none;
+            margin: 0 0 10px 20px;
+            font-style: italic;
+        }
+    </style>
+    <script>
+        /*  Function toggles visibility of the answer div linked to the clicked flashcard.
+            Avoids the issue where first click has no effect by explicitly checking
+            if the display is 'none' and switching to 'block', ensuring reliable toggling.
+        */
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            const isVisible = window.getComputedStyle(el).display !== 'none';
+            el.style.display = isVisible ? 'none' : 'block';
+        }
+    </script>
+
 </head>
 <body>
-<h1>Fiszki do nauki</h1>
+    <h1>Learn</h1>
+    <button type="button" onclick="location.href='/'">Back</button>
+    <ul style="list-style-type: none; padding: 0;">
+        <li th:each="card, iterStat : ${flashcards}">
 
+            <button type="button"
+                    class="flashcard-button"
+                    th:attr="onclick=|toggleAnswer('answer${iterStat.index}')|">
 
-<!--  list -->
-<ul>
-    <li th:each="card : ${flashcards}">
-        <b th:text="${card.front}"></b> – <span th:text="${card.back}"></span>
-    </li>
-</ul>
+           <span style="display: inline-block; width: 60px; color: #999; font-size: x-small;">
+                <span th:if="${card.isPublic}">(Public)</span>
+                <span th:if="${!card.isPublic}">(Your Card)</span>
+           </span>
+                <span th:text="${card.front}"></span>
+            </span>
+            </button>
+
+            <div class="answer" th:id="'answer' + ${iterStat.index}" th:text="${card.back}"></div>
+        </li>
+    </ul>
+
 </body>
 </html>

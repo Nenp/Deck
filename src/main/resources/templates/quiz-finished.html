@@ -6,6 +6,8 @@
 <body>
 <h2>Ukończyłeś quiz.</h2>
 
+<p>Poprawnych odpowiedzi: <strong th:text="${correctCount}"></strong> z <strong th:text="${total}"></strong></p>
+
 <p>Możesz zacz lub wrócić do strony głównej.</p>
 
 <a th:href="@{/quiz}">

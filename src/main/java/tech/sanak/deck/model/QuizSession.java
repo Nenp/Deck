@@ -11,6 +11,7 @@ import java.util.List;
 public class QuizSession {
     private List<Flashcard> flashcards;
     private int index = 0;
+    @Getter
     private int correctCount = 0;
 
     public QuizSession(List<Flashcard> flashcards) {
@@ -32,4 +33,5 @@ public class QuizSession {
     public void incrementCorrect() {
         correctCount++;
     }
+
 }

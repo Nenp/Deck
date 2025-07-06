@@ -6,6 +6,7 @@
 <body>
 <h2>Wybierz kategorie do quizu</h2>
 
+
 <form th:action="@{/quiz/start}" th:object="${quizRequest}" method="post">
     <ul>
         <li th:each="cat : ${categories}">
@@ -22,6 +23,10 @@
     </label>
 
     <br/><br/>
+
+    <p th:if="${noSelection}">
+        Wybierz przynajmniej jedną kategorię lub zaznacz „Publiczne fiszki”.
+    </p>
     <button type="submit">Start Quiz</button>
 </form>
 </body>

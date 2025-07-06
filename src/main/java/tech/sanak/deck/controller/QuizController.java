@@ -32,19 +32,29 @@ public class QuizController {
     }
 
     @PostMapping("/start")
-    public String startQuiz(@ModelAttribute QuizRequest quizRequest, HttpSession session) {
+    public String startQuiz(@ModelAttribute QuizRequest quizRequest, HttpSession session, Model model) {
+        List<String> categories = quizRequest.getCategories();
+
+        // jeśli pusto i nie zaznaczono includePublic – błąd
+        if ((categories == null || categories.isEmpty()) && !quizRequest.isIncludePublic()) {
+            model.addAttribute("quizRequest", quizRequest);
+            model.addAttribute("categories", flashcardService.findUserCategories());
+            model.addAttribute("noSelection", true);  // flaga do wyświetlenia komunikatu
+            return "quiz";  // wraca na formularz z info
+        }
+
         List<Flashcard> flashcards = flashcardService.findForLearning(
-                quizRequest.getCategories(),
+                categories,
                 quizRequest.isIncludePublic()
         );
-        Collections.shuffle(flashcards); // losujemy
-        session.setAttribute("quizQueue", new LinkedList<>(flashcards));
+        Collections.shuffle(flashcards);
 
-        QuizSession quizSession = new QuizSession(flashcards);
-        session.setAttribute("quiz", quizSession);
+        session.setAttribute("quizQueue", new LinkedList<>(flashcards));
+        session.setAttribute("quiz", new QuizSession(flashcards));
 
         return "redirect:/quiz/next";
     }
+
 
     @GetMapping("/next")
     public String showNext(Model model, HttpSession session) {
@@ -85,6 +95,7 @@ public class QuizController {
         model.addAttribute("total", quiz.getFlashcards().size());
 
         session.removeAttribute("quiz"); // wyczysc quiz z sesji po zakończeniu
+        session.removeAttribute("quizQueue");
 
         return "quiz-finished";
     }

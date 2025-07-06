@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Quiz</title>
 </head>
@@ -9,22 +9,26 @@
 <p><strong>Pytanie:</strong> <span th:text="${card.front}"></span></p>
 
 <div>
-    <details open>
+    <details>
         <summary>Pokaż odpowiedź</summary>
         <p th:text="${card.back}"></p>
     </details>
 </div>
 
-<form th:action="@{/quiz/answer}" method="post">
-    <p>Correct?</p>
-    <input type="hidden" name="isCorrect" value="true"/>
-    <button type="submit">✅ Tak</button>
-</form>
 
-<form th:action="@{/quiz/answer}" method="post">
-    <input type="hidden" name="isCorrect" value="false"/>
-    <button type="submit">❌ Nie</button>
-</form>
+<p>Correct?</p>
+<div class="button-row">
+    <form th:action="@{/quiz/answer}" method="post">
+        <input type="hidden" name="isCorrect" value="true"/>
+        <button type="submit">Tak</button>
+    </form>
+
+
+    <form th:action="@{/quiz/answer}" method="post">
+        <input type="hidden" name="isCorrect" value="false"/>
+        <button type="submit">Nie</button>
+    </form>
+</div>
 
 </body>
 </html>
