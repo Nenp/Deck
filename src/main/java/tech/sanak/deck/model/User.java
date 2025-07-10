@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "users") // opcjonalnie zmiana nazwy, bo "user" jest słowem kluczowym w wielu DB
+@Table(name = "users") // zmiana nazwy, bo "user" jest słowem kluczowym w wielu DB
 public class User {
 
     @Id

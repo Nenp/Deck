@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Rozpocznij quiz</title>
+    <title>Start Quiz</title>
 </head>
 <body>
-<h2>Wybierz kategorie do quizu</h2>
+<h2>Select categories</h2>
 
 
 <form th:action="@{/quiz/start}" th:object="${quizRequest}" method="post">
@@ -19,14 +19,14 @@
 
     <label>
         <input type="checkbox" th:field="*{includePublic}" />
-        Uwzględnij fiszki publiczne
+        Include public flashcards
     </label>
 
     <br/><br/>
 
-    <p th:if="${noSelection}">
-        Wybierz przynajmniej jedną kategorię lub zaznacz „Publiczne fiszki”.
-    </p>
+    <!-- validation error to display if provided  -->
+    <p th:if="${quizError}" th:text="${quizError}"> </p>
+
     <button type="submit">Start Quiz</button>
 </form>
 </body>

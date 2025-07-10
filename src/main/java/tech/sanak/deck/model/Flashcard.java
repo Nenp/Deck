@@ -14,19 +14,19 @@ import lombok.*;
 /**
  * Represents a flashcard entity stored in the database.
  * This entity is automatically mapped to a table using JPA.
+ *
+ * Used by Spring JPA repositories for CRUD operations.
  */
 
 @Entity // JPA: Marks this class as a persistent entity mapped to a table in the database
-        // JPA: Klasa to encja mapowana do tabeli w bazie
 
-@Data   // Lombok: Generuje gettery, settery, tostring(), equals(), hashCode()
+@Data   // Lombok: getter, setter, tostring(), equals(), hashCode()
 //@Getter
 //@Setter
-@NoArgsConstructor // Lombok: generuje konstruktor bezargumentowy
-@AllArgsConstructor // Lombok: generuje konstruktor ze wszystkimi argumentami
+@NoArgsConstructor // Lombok: No arguments constructor for ORM
+@AllArgsConstructor // Lombok: All arguments constructor
 @Builder    // Lombok: enables the builder pattern
 public class Flashcard {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +37,9 @@ public class Flashcard {
     private boolean isPublic = false;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User owner;
+    @JoinColumn(name = "user_id")  // foreign key to User
+    private User owner;  // Owner of the flashcard - null means globa/public
+                         // (if isPublic == true)
 
     private String front;   // The front side of the flashcard (question)
     private String back;    // The back side of the flashcard (answer)
