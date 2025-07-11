@@ -1,22 +1,46 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Quiz zakończony</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>Ukończyłeś quiz.</h2>-->
+
+<!--<p>Poprawnych odpowiedzi: <strong th:text="${correctCount}"></strong> z <strong th:text="${total}"></strong></p>-->
+
+<!--<p>Możesz zacz lub wrócić do strony głównej.</p>-->
+
+<!--<a th:href="@{/quiz}">-->
+<!--    <button type="button">Zagraj ponownie</button>-->
+<!--</a>-->
+
+<!--<a th:href="@{/}">-->
+<!--    <button type="button">Strona główna</button>-->
+<!--</a>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Quiz zakończony</title>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
 </head>
 <body>
-<h2>Ukończyłeś quiz.</h2>
+<h1>Quiz Finished!</h1>
 
-<p>Poprawnych odpowiedzi: <strong th:text="${correctCount}"></strong> z <strong th:text="${total}"></strong></p>
+<p th:text="'You got ' + ${correctCount} + ' out of ' + ${total} + ' correct.'"></p>
 
-<p>Możesz zacz lub wrócić do strony głównej.</p>
+<div th:if="${correctCount} >= ${total} * 0.8">
+    <p>Great job!</p>
+</div>
+<div th:unless="${correctCount} >= ${total} * 0.8">
+    <p>Keep practicing!</p>
+</div>
 
-<a th:href="@{/quiz}">
-    <button type="button">Zagraj ponownie</button>
-</a>
-
-<a th:href="@{/}">
-    <button type="button">Strona główna</button>
-</a>
-
+<button onclick="location.href='/quiz'">Try Again</button>
+<button onclick="location.href='/'">Home</button>
 </body>
 </html>

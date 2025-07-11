@@ -23,7 +23,7 @@ public class LearnController {
 
     @GetMapping("/learn")
     public String showLearnForm(Model model) {
-        List<String> userCategories = flashcardService.findUserCategories();
+        List<String> userCategories = flashcardService.findVisibleCategories();
         model.addAttribute("categories", userCategories);
         model.addAttribute("learnRequest", new LearnRequest());
         return "learn";
@@ -37,7 +37,7 @@ public class LearnController {
         );
 
         if (flashcards.isEmpty()) {
-            List<String> userCategories = flashcardService.findUserCategories();
+            List<String> userCategories = flashcardService.findVisibleCategories();
             model.addAttribute("categories", userCategories);
             model.addAttribute("learnRequest", learnRequest);
             model.addAttribute("noResults", true);

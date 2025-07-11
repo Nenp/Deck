@@ -1,34 +1,125 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">-->
+<!--<head>-->
+<!--    <title>Quiz</title>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<h2>Kategoria: <span th:text="${card.category}"></span></h2>-->
+<!--<p><strong>Pytanie:</strong> <span th:text="${card.front}"></span></p>-->
+
+<!--<div>-->
+<!--    <details>-->
+<!--        <summary>Pokaż odpowiedź</summary>-->
+<!--        <p th:text="${card.back}"></p>-->
+<!--    </details>-->
+<!--</div>-->
+
+
+<!--<p>Correct?</p>-->
+<!--<div class="button-row">-->
+<!--    <form th:action="@{/quiz/answer}" method="post">-->
+<!--        <input type="hidden" name="isCorrect" value="true"/>-->
+<!--        <button type="submit">Tak</button>-->
+<!--    </form>-->
+
+
+<!--    <form th:action="@{/quiz/answer}" method="post" >-->
+<!--        <input type="hidden" name="isCorrect" value="false"/>-->
+<!--        <button type="submit">Incorrect</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+<head >
+    <meta charset="UTF-8">
     <title>Quiz</title>
+    <style>
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .flashcard-button {
+            width: 100%;
+            text-align: left;
+            padding: 1em;
+            margin: 10px 0;
+            font-size: 1.1em;
+            background-color: #f0f0f0;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .flashcard-button:hover {
+            background-color: #e0e0e0;
+        }
+        .answer, .actions {
+            display: none;
+            margin-top: 10px;
+        }
+        .actions button {
+            margin-right: 10px;
+            padding: 0.5em 1em;
+        }
+        .show-btn {
+            background-color: #76d7c4;
+            padding: 0.5em 1em;
+        }
+        .show-btn:hover {
+            background-color: #5ac4ad;
+        }
+
+        .quiz-btn.correct {
+            background-color: #76d7c4;
+        }
+        .quiz-btn.correct:hover {
+            background-color: #5ac4ad;
+        }
+
+        .quiz-btn.incorrect {
+            background-color: #f0f0f0;
+        }
+        .quiz-btn.incorrect:hover {
+            background-color: #e0e0e0;
+        }
+
+    </style>
+    <script>
+        function revealAnswer() {
+            document.getElementById("answer").style.display = "block";
+            document.getElementById("actions").style.display = "block";
+            document.getElementById("show-btn").style.display = "none";
+        }
+    </script>
 </head>
 <body>
+<h1>Quiz</h1>
+<p th:text="'Question ' + ${quiz.index + 1} + ' of ' + ${quiz.flashcards.size()}"></p>
 
-<h2>Kategoria: <span th:text="${card.category}"></span></h2>
-<p><strong>Pytanie:</strong> <span th:text="${card.front}"></span></p>
-
-<div>
-    <details>
-        <summary>Pokaż odpowiedź</summary>
-        <p th:text="${card.back}"></p>
-    </details>
+<div class="flashcard-button">
+    <span th:text="${card.front}"></span>
 </div>
 
+<button id="show-btn" class="show-btn" onclick="revealAnswer()">Show Answer</button>
 
-<p>Correct?</p>
-<div class="button-row">
-    <form th:action="@{/quiz/answer}" method="post">
+<div id="answer" class="answer">
+    <strong>Answer:</strong> <span th:text="${card.back}"></span>
+</div>
+
+<div id="actions" class="actions">
+    <form th:action="@{/quiz/answer}" method="post" style="display: inline;">
         <input type="hidden" name="isCorrect" value="true"/>
-        <button type="submit">Tak</button>
+        <button type="submit" class="quiz-btn correct">Correct</button>
     </form>
-
-
-    <form th:action="@{/quiz/answer}" method="post">
+    <form th:action="@{/quiz/answer}" method="post" style="display: inline;">
         <input type="hidden" name="isCorrect" value="false"/>
-        <button type="submit">Nie</button>
+        <button type="submit" class="quiz-btn incorrect">Incorrect</button>
     </form>
 </div>
-
 </body>
 </html>

@@ -27,7 +27,7 @@ public class QuizController {
     @GetMapping
     public String showQuizForm(Model model) {
         model.addAttribute("quizRequest", new QuizRequest());
-        model.addAttribute("categories", flashcardService.findUserCategories());
+        model.addAttribute("categories", flashcardService.findVisibleCategories());
         return "quiz";
     }
 
@@ -38,7 +38,7 @@ public class QuizController {
         // Ensure at least one category is slected (public flashcards r not sufficient)
         if (categories == null || categories.isEmpty()) {
             model.addAttribute("quizRequest", quizRequest);
-            model.addAttribute("categories", flashcardService.findUserCategories());
+            model.addAttribute("categories", flashcardService.findVisibleCategories());
             model.addAttribute("quizError", "Musisz wybrać przynajmniej jedną kategorię.");
 
             return "quiz";  // Return to the quiz form with error
@@ -49,7 +49,7 @@ public class QuizController {
         // for scalability and performance
         if (categories.size() > 5) {
             model.addAttribute("quizRequest", quizRequest);
-            model.addAttribute("categories", flashcardService.findUserCategories());
+            model.addAttribute("categories", flashcardService.findVisibleCategories());
             model.addAttribute("quizError", "you can select up to 5 categories.");
             return "quiz";
         }
@@ -64,7 +64,7 @@ public class QuizController {
         // Handle case where no flashcards match the filter
         if (flashcards.isEmpty()) {
             model.addAttribute("quizRequest", quizRequest);
-            model.addAttribute("categories", flashcardService.findUserCategories());
+            model.addAttribute("categories", flashcardService.findVisibleCategories());
             model.addAttribute("quizError", "Brak fiszek spełniających kryteria.");
             return "quiz";
         }
@@ -92,6 +92,12 @@ public class QuizController {
                                           // poll() returns null if queue empty
         session.setAttribute("quizQueue", queue);  // Save updated queue
         model.addAttribute("card", current);  // Show current card
+
+        // Pass full quiz session object to the view for progress display
+        QuizSession quizSession = (QuizSession) session.getAttribute("quiz");
+        model.addAttribute("quiz", quizSession);
+
+
         return "quiz-question";
     }
 

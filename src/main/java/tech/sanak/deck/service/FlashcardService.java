@@ -49,9 +49,9 @@ public class FlashcardService {
         flashcardRepository.deleteById(id);
     }
 
-    public List<String> findUserCategories() {
+    public List<String> findVisibleCategories() {
         User currentUser = userService.getCurrentUser().orElseThrow();
-        return flashcardRepository.findDistinctCategoriesByOwner(currentUser);
+        return flashcardRepository.findAllVisibleCategories(currentUser);
     }
 
     public List<Flashcard> findForLearning(List<String> categories, boolean includePublic) {

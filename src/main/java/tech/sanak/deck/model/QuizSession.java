@@ -14,7 +14,7 @@ public class QuizSession {
     @Getter
     private int correctCount = 0;
 
-    public QuizSession(List<Flashcard> flashcards) {
+    public QuizSession(List<Flashcard> flashcards) {  // if !null : if null
         this.flashcards = flashcards != null ? flashcards : Collections.emptyList();
     }
 
