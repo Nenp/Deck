@@ -35,3 +35,4 @@ build/
 *.zip
 *.log
 *.env
+!.env.example
