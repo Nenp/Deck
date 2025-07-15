@@ -33,6 +33,11 @@
     <label>Front: <input type="text" th:field="*{front}" /></label><br>
     <label>Back: <input type="text" th:field="*{back}" /></label><br>
     <label>Category: <input type="text" th:field="*{category}" /></label><br>
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+    <label for="userId">Assign to user ID</label>
+    <input id="userId" type="number" name="userId" placeholder="Optional" />
+    <small>(Visible only for admins)</small>
+    </div>
     <button type="submit">Add Flashcard</button>
 </form>
 

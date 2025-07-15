@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Login</title></head>
+<head><title>Login</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 300px auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+        }
+
+        .login-container button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        .login-container p {
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <body>
-<h2>Login</h2>
-<form method="post" th:action="@{/login}">
-    <label>Username: <input type="text" name="username"/></label><br/>
-    <label>Password: <input type="password" name="password"/></label><br/>
-    <button type="submit">Login</button>
-</form>
-<p> Don't have an account?
-    <a th:href="@{/register}">Register</a>
-</p>
-<p th:if="${param.error}">Invalid username or password.</p>
-<p th:if="${param.logout}">You have been logged out.</p>
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="post" th:action="@{/login}">
+        <label>Username: <input type="text" name="username"/></label><br/>
+        <label>Password: <input type="password" name="password"/></label><br/>
+        <button type="submit">Login</button>
+    </form>
+    <p> Don't have an account?
+        <a th:href="@{/register}">Register</a>
+    </p>
+    <p th:if="${param.error}">Invalid username or password.</p>
+    <p th:if="${param.logout}">You have been logged out.</p>
+</div>
 </body>
 </html>

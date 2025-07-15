@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Flashcard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          font-family: 'Inter', sans-serif;
+        }
+
+        .page-center {
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .container {
+          max-width: 600px;
+          width: 100%;
+          padding: 20px;
+          text-align: center;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 1.2em;
+          align-items: center;
+        }
+
+        label {
+          width: 100%;
+          text-align: left;
+          font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="checkbox"] {
+          width: 100%;
+          padding: 0.6em;
+          font-size: 1em;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+
+        .checkbox-row {
+          display: flex;
+          align-items: center;
+          gap: 0.5em;
+          width: 100%;
+        }
+
+        .quiz-btn {
+          padding: 0.6em 1.4em;
+          border-radius: 6px;
+          font-size: 1em;
+          cursor: pointer;
+          width: 200px;
+          border: 1px solid #ccc;
+          background-color: #f0f0f0;
+        }
+
+        .quiz-btn:hover {
+          background-color: #e0e0e0;
+        }
+
+        .admin-only {
+          font-style: italic;
+          color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="page-center">
+    <div class="container">
+        <h1>Add a new flashcard</h1>
+
+        <form th:action="@{/flashcards/add}" th:object="${flashcard}" method="post">
+            <label>
+                Front:
+                <input type="text" th:field="*{front}" required />
+            </label>
+
+            <label>
+                Back:
+                <input type="text" th:field="*{back}" required />
+            </label>
+
+            <label>
+                Category:
+                <input type="text" th:field="*{category}" required />
+            </label>
+
+            <div style="margin: 10px 0;">
+                <label style="display: flex; align-items: center; gap: 6px;">
+                    <input type="checkbox" th:field="*{publicCard}" />
+                    <span>Make public</span>
+                </label>
+            </div>
+
+            <!-- Only for admin -->
+            <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                <label>
+                    Assign to user ID:
+                    <input type="text" name="userId" placeholder="Optional" />
+                </label>
+                <div class="admin-only">(Visible only for admins)</div>
+            </div>
+
+            <button type="submit" class="quiz-btn">Add</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -40,4 +40,20 @@ public class UserService {
         }
         return userRepository.findByUsername(auth.getName());
     }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow();
+    }
+
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public boolean hasAdminRole(String username) {
+        return userRepository.findByUsername(username)
+                .map(user -> "ADMIN".equals((user.getRole())))
+                .orElse(false);
+    }
+
 }

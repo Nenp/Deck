@@ -1,125 +1,156 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">-->
-<!--<head>-->
-<!--    <title>Quiz</title>-->
-<!--</head>-->
-<!--<body>-->
-
-<!--<h2>Kategoria: <span th:text="${card.category}"></span></h2>-->
-<!--<p><strong>Pytanie:</strong> <span th:text="${card.front}"></span></p>-->
-
-<!--<div>-->
-<!--    <details>-->
-<!--        <summary>Pokaż odpowiedź</summary>-->
-<!--        <p th:text="${card.back}"></p>-->
-<!--    </details>-->
-<!--</div>-->
-
-
-<!--<p>Correct?</p>-->
-<!--<div class="button-row">-->
-<!--    <form th:action="@{/quiz/answer}" method="post">-->
-<!--        <input type="hidden" name="isCorrect" value="true"/>-->
-<!--        <button type="submit">Tak</button>-->
-<!--    </form>-->
-
-
-<!--    <form th:action="@{/quiz/answer}" method="post" >-->
-<!--        <input type="hidden" name="isCorrect" value="false"/>-->
-<!--        <button type="submit">Incorrect</button>-->
-<!--    </form>-->
-<!--</div>-->
-
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-<head >
+<head>
     <meta charset="UTF-8">
     <title>Quiz</title>
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Inter', sans-serif;
+    <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          font-family: 'Inter', sans-serif;
         }
+
+        .page-center {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .container {
+          max-width: 700px;
+          width: 100%;
+          padding: 20px;
+          text-align: center;
+        }
+
         .flashcard-button {
-            width: 100%;
-            text-align: left;
-            padding: 1em;
-            margin: 10px 0;
-            font-size: 1.1em;
-            background-color: #f0f0f0;
-            border: 2px solid #ccc;
-            border-radius: 6px;
-            cursor: pointer;
+          width: 100%;
+          min-height: 3.6em; /* question space */
+          background-color: #f0f0f0;
+          border: 2px solid #ccc;
+          border-radius: 6px;
+          margin: 10px 0;
+          font-size: 1.1em;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-        .flashcard-button:hover {
-            background-color: #e0e0e0;
+
+        .answer-block {
+          min-height: 6em; /* button n answer space */
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5em;
         }
-        .answer, .actions {
-            display: none;
-            margin-top: 10px;
+
+        #answer {
+          display: none;
+          font-size: 1.1em;
         }
-        .actions button {
-            margin-right: 10px;
-            padding: 0.5em 1em;
+
+        #actions {
+          display: flex;
+          flex-direction: column;
+          margin-top: 20px;
+          gap: 10px;
+          align-items: center;
         }
-        .show-btn {
-            background-color: #76d7c4;
-            padding: 0.5em 1em;
+
+        .quiz-btn {
+          padding: 0.6em 1.4em;
+          border-radius: 6px;
+          font-size: 1em;
+          cursor: pointer;
+          width: 200px;
+          max-width: 100%;
+          border: 1px solid #ccc;
+          background-color: #f0f0f0;
         }
-        .show-btn:hover {
-            background-color: #5ac4ad;
+
+        .quiz-btn:hover {
+          background-color: #e0e0e0;
         }
 
         .quiz-btn.correct {
-            background-color: #76d7c4;
+          background-color: #76d7c4;
+          border: none;
         }
+
         .quiz-btn.correct:hover {
-            background-color: #5ac4ad;
+          background-color: #5ac4ad;
         }
 
-        .quiz-btn.incorrect {
-            background-color: #f0f0f0;
-        }
         .quiz-btn.incorrect:hover {
-            background-color: #e0e0e0;
+          background-color: #e0e0e0;
         }
 
+        .quiz-btn.question-box {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 0.6em 1.4em;
+            font-size: 1em;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 6px;
+            margin: 10px auto;
+            text-align: center;
+        }
     </style>
+
     <script>
         function revealAnswer() {
-            document.getElementById("answer").style.display = "block";
-            document.getElementById("actions").style.display = "block";
-            document.getElementById("show-btn").style.display = "none";
+          document.getElementById("answer").style.display = "block";
+          document.getElementById("actions").style.display = "flex";
+          const btn = document.getElementById("show-btn");
+          btn.style.visibility = "hidden";
+          btn.style.pointerEvents = "none";
         }
     </script>
 </head>
+
 <body>
-<h1>Quiz</h1>
-<p th:text="'Question ' + ${quiz.index + 1} + ' of ' + ${quiz.flashcards.size()}"></p>
+<div class="page-center">
+    <div class="container">
+        <h1>Quiz</h1>
+        <p th:text="'Question ' + ${quiz.index + 1} + ' of ' + ${quiz.flashcards.size()}"></p>
 
-<div class="flashcard-button">
-    <span th:text="${card.front}"></span>
-</div>
+        <div class="quiz-btn question-box">
+            <span th:text="${card.front}"></span>
+        </div>
 
-<button id="show-btn" class="show-btn" onclick="revealAnswer()">Show Answer</button>
+        <div class="answer-block">
+            <div id="answer">
+                <strong>Answer:</strong> <span th:text="${card.back}"></span>
+            </div>
 
-<div id="answer" class="answer">
-    <strong>Answer:</strong> <span th:text="${card.back}"></span>
-</div>
+            <button id="show-btn" onclick="revealAnswer()" class="quiz-btn">
+                Show Answer
+            </button>
+        </div>
 
-<div id="actions" class="actions">
-    <form th:action="@{/quiz/answer}" method="post" style="display: inline;">
-        <input type="hidden" name="isCorrect" value="true"/>
-        <button type="submit" class="quiz-btn correct">Correct</button>
-    </form>
-    <form th:action="@{/quiz/answer}" method="post" style="display: inline;">
-        <input type="hidden" name="isCorrect" value="false"/>
-        <button type="submit" class="quiz-btn incorrect">Incorrect</button>
-    </form>
+
+        <div id="actions">
+            <form th:action="@{/quiz/answer}" method="post">
+                <input type="hidden" name="isCorrect" value="true"/>
+                <button type="submit" class="quiz-btn correct">Correct</button>
+            </form>
+            <form th:action="@{/quiz/answer}" method="post">
+                <input type="hidden" name="isCorrect" value="false"/>
+                <button type="submit" class="quiz-btn">Incorrect</button>
+            </form>
+            <form action="/" method="get" style="margin-top: 40px;">
+                <button type="submit" class="quiz-btn">Home</button>
+            </form>
+
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>Wynik nauki</title>
     <style>
+
+        .learn-result-container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 20px;
+        }
+
         .flashcard-button {
             width: 100%;
             text-align: left;
@@ -42,30 +49,22 @@
 
 </head>
 <body>
-    <h1>Learn</h1>
-    <button type="button" onclick="location.href='/'">Back</button>
+<div class="learn-result-container">
+    <h1 style="text-align: center; margin-bottom: 15px;">Learn</h1>
+
+    <div style="text-align: center; margin-bottom: 30px;">
+        <button type="button" class="quiz-btn" onclick="location.href='/'">Home</button>
+        <button type="button" class="quiz-btn" onclick="location.href='/learn'">Back</button>
+    </div>
     <li style="list-style-type: none; padding: 0;">
     <ul style="list-style-type: none; padding: 0; margin: 0;">
         <li th:each="card, iterStat : ${flashcards}">
-<!--            <button type="button"-->
-<!--                    class="flashcard-button"-->
-<!--                    th:attr="onclick=|toggleAnswer('answer${iterStat.index}')|">-->
 
-<!--           <span style="display: flex; flex-direction: column; align-items: center;-->
-<!--                width: 80px; color: #999; font-size: x-small; text-align: center;">-->
-<!--                <span th:if="${card.isPublic}">(Public)</span>-->
-<!--                <span th:if="${!card.isPublic}">(Your Card)</span>-->
-<!--                <span th:text="${card.category}"></span>-->
-<!--               -->
-<!--           </span>-->
-<!--                <span th:text="${card.front}"></span>-->
-<!--            </span>-->
-<!--            </button>-->
             <button type="button" class="flashcard-button" th:attr="onclick=|toggleAnswer('answer${iterStat.index}')|">
                 <div style="display: flex; flex-direction: row; align-items: center; width: 100%;">
                     <div style="width: 80px; display: flex; flex-direction: column; align-items: center; color: #999; font-size: x-small; text-align: center; flex-shrink: 0;">
-                        <span th:if="${card.isPublic}">(Public)</span>
-                        <span th:if="${!card.isPublic}">(Your Card)</span>
+                        <span th:if="${card.publicCard}">(Public)</span>
+                        <span th:if="${!card.publicCard}">(Your Card)</span>
                         <span th:text="${card.category}"></span>
                     </div>
                     <div style="margin-left: 15px; flex-grow: 1;">
@@ -77,6 +76,6 @@
             <div class="answer" th:id="'answer' + ${iterStat.index}" th:text="${card.back}"></div>
         </li>
     </ul>
-
+    </div>
 </body>
 </html>

@@ -1,22 +1,109 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Deck – Fiszki</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Witaj w aplikacji Deck!</h1>-->
+
+<!--<div th:if="${#authentication != null}">-->
+<!--    <p>Zalogowany jako: <span th:text="${#authentication.name}"></span></p>-->
+<!--    <a th:href="@{/flashcards/view}">Moje fiszki</a>-->
+<!--    <a th:href="@{/learn}">Tryb nauki</a>-->
+<!--</div>-->
+
+<!--<div th:if="${#authentication == null}">-->
+<!--    <p>Aby korzystać z aplikacji, zaloguj się lub zarejestruj.</p>-->
+<!--    <a th:href="@{/login}">Zaloguj się</a> |-->
+<!--    <a th:href="@{/register}">Zarejestruj się</a>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Deck – Fiszki</title>
+    <meta charset="UTF-8">
+    <title>Deck – Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
+    <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          font-family: 'Inter', sans-serif;
+        }
+
+        .page-center {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+
+        .container {
+          max-width: 600px;
+          width: 100%;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+        }
+
+        .quiz-btn {
+          padding: 0.6em 1.4em;
+          border-radius: 6px;
+          font-size: 1em;
+          cursor: pointer;
+          width: 200px;
+          max-width: 100%;
+          border: 1px solid #ccc;
+          background-color: #f0f0f0;
+          margin: 10px auto;
+
+          text-decoration: none;
+          text-align: center;
+          display: inline-block;
+
+        }
+
+        .quiz-btn:hover {
+          background-color: #e0e0e0;
+        }
+
+        h1 {
+          margin-bottom: 40px;
+        }
+    </style>
 </head>
 <body>
-<h1>Witaj w aplikacji Deck!</h1>
+<div class="page-center">
+    <div class="container">
+        <h1>Welcome to Deck</h1>
 
-<div th:if="${#authentication != null}">
-    <p>Zalogowany jako: <span th:text="${#authentication.name}"></span></p>
-    <a th:href="@{/flashcards/view}">Moje fiszki</a>
-    <a th:href="@{/learn}">Tryb nauki</a>
+        <a th:href="@{/learn}" class="quiz-btn">Learn</a>
+
+        <a th:href="@{/quiz}" class="quiz-btn">Quiz</a>
+
+        <a th:href="@{/flashcards/view}" class="quiz-btn">My Flashcards</a>
+
+        <a th:href="@{flashcards/add}" class="quiz-btn">Add Flashcard</a>
+
+        <div style="margin-top: 60px; display: flex; align-items: center; gap: 20px;">
+            <span th:text="'Logged in as: ' + ${#authentication.name}"></span>
+
+            <form th:action="@{/logout}" method="post" style="margin: 0;">
+                <button type="submit" class="quiz-btn">Logout</button>
+            </form>
+        </div>
+
+    </div>
 </div>
-
-<div th:if="${#authentication == null}">
-    <p>Aby korzystać z aplikacji, zaloguj się lub zarejestruj.</p>
-    <a th:href="@{/login}">Zaloguj się</a> |
-    <a th:href="@{/register}">Zarejestruj się</a>
-</div>
-
 </body>
 </html>

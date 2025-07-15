@@ -39,10 +39,33 @@ public class FlashcardService {
         return flashcardRepository.save(flashcard);
     }
 
+    public void saveCategoryIfNotExists(String category) {
+        if (category == null || category.trim().isEmpty()) return;
+
+        List<String> existing = flashcardRepository.findAllDistinctCategories(); // lub użyj setu
+        if (!existing.contains(category)) {
+            // Dodaj "pustą" fiszkę przypisaną do tej kategorii (lub użyj encji Category jeśli istnieje)
+            Flashcard dummy = new Flashcard();
+            dummy.setFront("Category placeholder");
+            dummy.setBack("Auto-generated to register category");
+            dummy.setCategory(category);
+            dummy.setPublicCard(false);
+
+            // Opcjonalnie: przypisz admina jako ownera
+            userService.getCurrentUser().ifPresent(dummy::setOwner);
+
+            flashcardRepository.save(dummy);
+        }
+    }
+
     public List<Flashcard> findAllByCurrentUser() {
         User user = userService.getCurrentUser()
                 .orElseThrow(() -> new IllegalStateException("Not logged in"));
         return flashcardRepository.findByOwner(user);
+    }
+
+    public List<String> findAllDistinctCategories() {
+        return flashcardRepository.findAllDistinctCategories();
     }
 
     public void deleteById(Long id) {

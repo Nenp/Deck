@@ -2,32 +2,85 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Start Quiz</title>
+    <style>
+
+        .quiz-container {
+            max-width: 500px;
+            margin: 150px auto;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .quiz-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quiz-container li {
+            margin: 5px 0;
+        }
+
+        .checkbox-inline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quiz-btn {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .quiz-btn:hover {
+            background-color: #e2e2e2;
+        }
+
+        .quiz-error {
+            margin-top: 15px;
+        }
+
+    </style>
 </head>
 <body>
-<h2>Select categories</h2>
+<div class="quiz-container">
+    <h2>Select Categories</h2>
 
+    <form th:action="@{/quiz/start}" th:object="${quizRequest}" method="post">
+        <div class="category-list">
+            <div th:each="cat : ${categories}" style="margin: 6px 0; margin-left: 180px;">
+                <label style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" th:value="${cat}" th:field="*{categories}" />
+                    <span th:text="${cat}"></span>
+                </label>
+            </div>
+        </div>
 
-<form th:action="@{/quiz/start}" th:object="${quizRequest}" method="post">
-    <ul>
-        <li th:each="cat : ${categories}">
-            <label>
-                <input type="checkbox" th:value="${cat}" th:field="*{categories}" />
-                <span th:text="${cat}"></span>
-            </label>
-        </li>
-    </ul>
+        <div class="checkbox-inline">
+            <input type="checkbox" th:field="*{includePublic}" />
+            <span>Include public flashcards</span>
+        </div>
 
-    <label>
-        <input type="checkbox" th:field="*{includePublic}" />
-        Include public flashcards
-    </label>
+        <p th:if="${quizError}" th:text="${quizError}" class="quiz-error"></p>
 
-    <br/><br/>
+        <div style="margin-top: 20px;">
+            <button type="submit" class="quiz-btn">Start Quiz</button>
+        </div>
+    </form>
 
-    <!-- validation error to display if provided  -->
-    <p th:if="${quizError}" th:text="${quizError}"> </p>
+    <form action="/" method="get">
+        <button type="submit" class="quiz-btn">Home</button>
+    </form>
 
-    <button type="submit">Start Quiz</button>
-</form>
+</div>
 </body>
 </html>
