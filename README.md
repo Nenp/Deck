@@ -44,3 +44,7 @@ docker compose up -d
 
 5. Access the app at:
 `http://localhost:8080`
+
+## Database schema
+
+![Database Schema](https://github.com/Nenp/Deck/blob/master/docs/schema.png?raw=true)
