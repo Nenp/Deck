@@ -20,10 +20,16 @@ public class FlashcardController {
     private final UserService userService;
 
     @GetMapping("/add")
-    public String showAddForm(Model model) {
+    public String showAddForm(Model model, Principal principal) {
         model.addAttribute("flashcard", new Flashcard());
+
+        // adds available category list
+        var categories = flashcardService.findVisibleCategories(principal.getName());
+        model.addAttribute("categories", categories);
+
         return "add-card";
     }
+
 
     @PostMapping("/add")
     public String handleAddFlashcard(@ModelAttribute Flashcard flashcard,

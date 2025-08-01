@@ -12,10 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
-    @PostConstruct
-    public void testSecurityInit() {
-        System.out.println(">>> SecurityConfig initialized");
-    }
+//    @PostConstruct
+//    public void testSecurityInit() {
+//        System.out.println(">>> SecurityConfig initialized");
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

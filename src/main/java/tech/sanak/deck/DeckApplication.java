@@ -13,7 +13,8 @@ public class DeckApplication {
 
     @PostConstruct
     public void printEnv() {
-        System.out.println("POSTGRES_USER = " + System.getenv("POSTGRES_USER"));
-        System.out.println("POSTGRES_PASSWORD = " + System.getenv("POSTGRES_PASSWORD"));
+//        System.out.println("POSTGRES_USER = " + System.getenv("POSTGRES_USER"));
+//        System.out.println("POSTGRES_PASSWORD = " + System.getenv("POSTGRES_PASSWORD"));
     }
 }
+

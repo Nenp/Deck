@@ -15,7 +15,7 @@ public interface FlashcardRepository extends JpaRepository<Flashcard, Long> {
     List<Flashcard> findByOwner(User user);
     List<Flashcard> findByOwnerAndCategoryIn(User user, List<String> categories);
 
-    List<Flashcard> findBypublicCardTrueAndCategoryIn(List<String> categories);
+    List<Flashcard> findByPublicCardTrueAndCategoryIn(List<String> categories);
 
 
     @Query("SELECT DISTINCT f.category FROM Flashcard f WHERE f.owner = :user OR f.publicCard = true")
@@ -34,4 +34,6 @@ public interface FlashcardRepository extends JpaRepository<Flashcard, Long> {
     @Query("SELECT DISTINCT f.category FROM Flashcard f")
     List<String> findAllDistinctCategories();
 
+    @Query("SELECT DISTINCT f.category FROM Flashcard f WHERE f.owner = :user OR f.publicCard = true")
+    List<String> findDistinctCategoriesByOwnerOrPublic(@Param("user") User user);
 }

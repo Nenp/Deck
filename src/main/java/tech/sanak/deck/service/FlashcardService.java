@@ -32,6 +32,11 @@ public class FlashcardService {
         return flashcardRepository.save(flashcard);
     }
 
+    public List<Flashcard> findByOwner(String username) {
+        User user = userService.findByUsername(username);
+        return flashcardRepository.findByOwner(user);
+    }
+
     public Flashcard saveWithCurrentUser(Flashcard flashcard) {
         User user = userService.getCurrentUser()
                 .orElseThrow(() -> new IllegalStateException("Not logged in"));
@@ -75,6 +80,11 @@ public class FlashcardService {
     public List<String> findVisibleCategories() {
         User currentUser = userService.getCurrentUser().orElseThrow();
         return flashcardRepository.findAllVisibleCategories(currentUser);
+    }
+
+    public List<String> findVisibleCategories(String username) {
+        User user = userService.findByUsername(username);
+        return flashcardRepository.findAllVisibleCategories(user);
     }
 
     public List<Flashcard> findForLearning(List<String> categories, boolean includePublic) {

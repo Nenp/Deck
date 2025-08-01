@@ -22,6 +22,7 @@
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <button type="submit">Wyloguj</button>
         </form>
+        <button type="button" onclick="location.href='/'">Home</button>
         <button type="button" onclick="location.href='/learn'">Nauka</button>
         <button type="button" onclick="location.href='/quiz'">Quiz</button>
     </div>
@@ -32,7 +33,12 @@
 <form th:action="@{/flashcards/view}" th:object="${flashcard}" method="post">
     <label>Front: <input type="text" th:field="*{front}" /></label><br>
     <label>Back: <input type="text" th:field="*{back}" /></label><br>
-    <label>Category: <input type="text" th:field="*{category}" /></label><br>
+    <label>Category:
+        <select th:field="*{category}">
+            <option value="" disabled selected>Select a category</option>
+            <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+        </select>
+    </label><br>
     <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
     <label for="userId">Assign to user ID</label>
     <input id="userId" type="number" name="userId" placeholder="Optional" />

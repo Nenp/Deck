@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "users") // zmiana nazwy, bo "user" jest słowem kluczowym w wielu DB
+@ToString(exclude = "password")
 public class User {
 
     @Id
